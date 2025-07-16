@@ -56,3 +56,26 @@ export const createCourse = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const updateCourse = async (req, res) => {
+  const { id } = req.params;
+  const updates = req.body;
+
+  try {
+    const course = await coursesSchema.findByIdAndUpdate(id, updates, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!course) {
+      return res.status(404).json({ message: "Course not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Course updated successfully", course: course });
+  } catch (error) {
+    console.error("Error updating course:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
