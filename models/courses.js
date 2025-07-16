@@ -11,7 +11,9 @@ const coursesSchema = new mongoose.Schema({
     required: true,
   },
   description: {
-    type: Text,
+    type: String,
+    required: false,
+    default: null,
   },
   price: {
     type: mongoose.Schema.Types.Decimal128,
@@ -25,11 +27,12 @@ const coursesSchema = new mongoose.Schema({
   status: {
     type: String,
     enum: ["Active", "Inactive"],
-    default: true,
+    default: "Active",
   },
   image_url: {
     type: String,
     required: false,
+    default: null,
   },
 });
 export default mongoose.model("Course", coursesSchema);
