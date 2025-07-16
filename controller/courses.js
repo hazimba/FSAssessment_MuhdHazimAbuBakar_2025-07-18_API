@@ -62,6 +62,15 @@ export const updateCourse = async (req, res) => {
   const updates = req.body;
 
   try {
+    const existingCourse = await coursesSchema.findOne({
+      title: updates.title,
+    });
+    if (existingCourse && existingCourse._id.toString() !== id) {
+      return res
+        .status(400)
+        .json({ message: "Course with this title already exists" });
+    }
+
     const course = await coursesSchema.findByIdAndUpdate(id, updates, {
       new: true,
       runValidators: true,
