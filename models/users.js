@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { v4 as uuidv4 } from "uuid";
+import { UserRole, UserStatus } from "../types/user.ts";
 
 const usersSchema = new mongoose.Schema(
   {
@@ -9,7 +10,7 @@ const usersSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["Instructor", "Student"],
+      enum: [UserRole.Instructor, UserRole.Student],
       required: true,
     },
     name: {
@@ -18,8 +19,8 @@ const usersSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["Active", "Inactive"],
-      default: "Active",
+      enum: [UserStatus.Active, UserStatus.Inactive],
+      default: UserStatus.Active,
     },
     deleted_at: {
       type: Date,

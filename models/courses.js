@@ -22,9 +22,15 @@ const coursesSchema = new mongoose.Schema(
     },
     instructor_id: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Instructor",
+      ref: "User",
       required: true,
     },
+    student_ids: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     status: {
       type: String,
       enum: ["Active", "Inactive"],
