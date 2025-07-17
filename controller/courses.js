@@ -74,6 +74,7 @@ export const updateCourse = async (req, res) => {
     const course = await coursesSchema.findByIdAndUpdate(id, updates, {
       new: true,
       runValidators: true,
+      updated_at: Date.now(),
     });
 
     if (!course) {
@@ -95,7 +96,7 @@ export const deleteCourse = async (req, res) => {
   try {
     const course = await coursesSchema.findByIdAndUpdate(
       id,
-      { status: "Inactive" },
+      { status: "Inactive", deleted_at: Date.now() },
       { new: true }
     );
 
@@ -116,7 +117,7 @@ export const restoreCourse = async (req, res) => {
   try {
     const course = await coursesSchema.findByIdAndUpdate(
       id,
-      { status: "Active" },
+      { status: "Active", deleted_at: null, updated_at: Date.now() },
       { new: true }
     );
     if (!course) {

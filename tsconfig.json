@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "CommonJS", // or "ESNext" if you're using "type": "module"
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "*": ["*"]
+    }
+  },
+  "include": ["./**/*.ts"]
+}
