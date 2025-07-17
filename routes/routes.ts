@@ -8,7 +8,13 @@ import {
   restoreCourse,
 } from "../controller/courses.js";
 
-import { getUsers, createUser } from "../controller/users.js";
+import {
+  getUsers,
+  createUser,
+  deleteUser,
+  restoreUser,
+  updateUser,
+} from "../controller/users.js";
 
 const router = express.Router();
 
@@ -21,5 +27,8 @@ router.patch("/restoreCourse/:id", restoreCourse);
 
 router.get("/getUsers", getUsers);
 router.post("/createUser", createUser);
+router.delete("/deleteUser/:id", deleteUser);
+router.patch("/restoreUser/:id", restoreUser);
+router.patch("/updateUser/:id", updateUser);
 
 export default router;
