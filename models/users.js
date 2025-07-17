@@ -26,6 +26,11 @@ const usersSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    identification: {
+      type: String,
+      required: true,
+      unique: true,
+    },
   },
   {
     timestamps: {
