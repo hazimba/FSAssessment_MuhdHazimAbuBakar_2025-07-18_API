@@ -1,12 +1,11 @@
 import mongoose from "mongoose";
-import { v4 as uuidv4 } from "uuid";
 import { UserRole, UserStatus } from "../types/user.ts";
 
 const usersSchema = new mongoose.Schema(
   {
     _id: {
-      type: String,
-      default: uuidv4,
+      type: mongoose.Schema.Types.ObjectId,
+      default: () => new mongoose.Types.ObjectId(),
     },
     role: {
       type: String,
@@ -31,6 +30,11 @@ const usersSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
+    enrollment: {
+      type: [String],
+      ref: "Course",
+      default: null,
+    },
   },
   {
     timestamps: {
@@ -39,4 +43,5 @@ const usersSchema = new mongoose.Schema(
     },
   }
 );
+
 export default mongoose.model("User", usersSchema);

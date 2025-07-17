@@ -15,7 +15,7 @@ export const getUsers = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { role, name, identification } = req.body;
+  const { role, name, identification, enrollment } = req.body;
 
   if (!role || !name || !identification) {
     console.error("Role, name, and identification are required");
@@ -34,6 +34,7 @@ export const createUser = async (req, res) => {
       role,
       name,
       identification,
+      enrollment,
       status: "Active",
     });
 
