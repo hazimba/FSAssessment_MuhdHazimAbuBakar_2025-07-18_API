@@ -14,7 +14,7 @@ export const getCourses = async (req, res) => {
   }
 };
 
-export const getCourseById = async (req, res) => {
+export const getCourse = async (req, res) => {
   const { id } = req.params;
   try {
     const course = await coursesSchema.findById(id);

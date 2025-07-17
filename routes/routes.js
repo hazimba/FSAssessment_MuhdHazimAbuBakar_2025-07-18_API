@@ -2,7 +2,7 @@ import express from "express";
 import {
   createCourse,
   getCourses,
-  getCourseById,
+  getCourse,
   updateCourse,
   deleteCourse,
   restoreCourse,
@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/getCourses", getCourses);
 router.post("/createCourse", createCourse);
-router.get("/getCourse/:id", getCourseById);
+router.get("/getCourse/:id", getCourse);
 router.patch("/updateCourse/:id", updateCourse);
 router.delete("/deleteCourse/:id", deleteCourse);
 router.patch("/restoreCourse/:id", restoreCourse);
