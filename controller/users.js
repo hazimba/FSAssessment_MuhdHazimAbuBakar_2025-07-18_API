@@ -15,16 +15,25 @@ export const getUsers = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { role, name } = req.body;
+  const { role, name, identification } = req.body;
 
-  if (!role || !name) {
+  if (!role || !name || !identification) {
+    console.error("Role, name, and identification are required");
     return res.status(400).json({ message: "Role and name are required" });
   }
 
   try {
+    const existingUser = await users.findOne({ identification });
+    if (existingUser) {
+      console.error("User with this identification already exists");
+      return res
+        .status(400)
+        .json({ message: "User with this identification already exists" });
+    }
     const newUser = new users({
       role,
       name,
+      identification,
       status: "Active",
     });
 
