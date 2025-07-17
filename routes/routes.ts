@@ -14,6 +14,7 @@ import {
   deleteUser,
   restoreUser,
   updateUser,
+  getUser,
 } from "../controller/users.js";
 
 const router = express.Router();
@@ -30,5 +31,6 @@ router.post("/createUser", createUser);
 router.delete("/deleteUser/:id", deleteUser);
 router.patch("/restoreUser/:id", restoreUser);
 router.patch("/updateUser/:id", updateUser);
+router.get("/getUser/:id", getUser);
 
 export default router;
