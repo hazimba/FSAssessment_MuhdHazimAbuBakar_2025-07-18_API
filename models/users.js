@@ -9,12 +9,20 @@ const usersSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: [UserRole.Instructor, UserRole.Student],
+      enum: [UserRole.Instructor, UserRole.Student, UserRole.SuperAdmin],
       required: true,
     },
     name: {
       type: String,
       required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      match: /.+\@.+\..+/,
+    },
+    password: {
+      type: String,
     },
     status: {
       type: String,
@@ -27,8 +35,7 @@ const usersSchema = new mongoose.Schema(
     },
     identification: {
       type: String,
-      required: true,
-      unique: true,
+      default: undefined,
     },
     enrollment: {
       type: [String],
