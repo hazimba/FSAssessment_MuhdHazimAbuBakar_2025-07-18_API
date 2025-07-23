@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
   createCourse,
   getCourses,
@@ -7,6 +8,8 @@ import {
   deleteCourse,
   restoreCourse,
 } from "../controller/courses.js";
+
+import { loginUser } from "../controller/auth.js";
 
 import {
   getUsers,
@@ -32,5 +35,7 @@ router.delete("/deleteUser/:id", deleteUser);
 router.patch("/restoreUser/:id", restoreUser);
 router.patch("/updateUser/:id", updateUser);
 router.get("/getUser/:id", getUser);
+
+router.post("/login", loginUser);
 
 export default router;

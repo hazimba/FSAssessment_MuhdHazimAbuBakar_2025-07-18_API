@@ -71,10 +71,14 @@ export const updateCourse = async (req, res) => {
         .json({ message: "Course with this title already exists" });
     }
 
-    const course = await coursesSchema.findByIdAndUpdate(id, updates, {
+    const updateCourse = {
+      ...updates,
+      updated_at: Date.now(),
+    };
+
+    const course = await coursesSchema.findByIdAndUpdate(id, updateCourse, {
       new: true,
       runValidators: true,
-      updated_at: Date.now(),
     });
 
     if (!course) {

@@ -1,4 +1,5 @@
 import users from "../models/users.js";
+import bcrypt from "bcrypt";
 
 export const getUsers = async (req, res) => {
   try {
@@ -15,28 +16,44 @@ export const getUsers = async (req, res) => {
 };
 
 export const createUser = async (req, res) => {
-  const { role, name, identification, enrollment } = req.body;
+  const { role, name, identification, enrollment, email, password } = req.body;
 
-  if (!role || !name || !identification) {
-    console.error("Role, name, and identification are required");
+  if (!role || !name) {
+    console.error("Role, name are required");
     return res.status(400).json({ message: "Role and name are required" });
   }
 
   try {
-    const existingUser = await users.findOne({ identification });
+    const existingUser = await users.findOne({ email });
     if (existingUser) {
-      console.error("User with this identification already exists");
+      console.error("User with this email already exists");
       return res
         .status(400)
-        .json({ message: "User with this identification already exists" });
+        .json({ message: "User with this email already exists" });
     }
-    const newUser = new users({
-      role,
+    const SALT_ROUNDS = 10;
+
+    const userData = {
       name,
-      identification,
-      enrollment,
+      role,
       status: "Active",
-    });
+    };
+
+    if (identification) {
+      userData.identification = identification;
+    }
+    if (enrollment) {
+      userData.enrollment = enrollment;
+    }
+    if (email) {
+      userData.email = email;
+    }
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS);
+      userData.password = hashedPassword;
+    }
+
+    const newUser = new users(userData);
 
     await newUser.save();
     res
@@ -96,11 +113,16 @@ export const updateUser = async (req, res) => {
     return res.status(400).json({ message: "No updates provided" });
   }
 
+  const updateCourse = {
+    ...updates,
+    updated_at: Date.now(),
+    student_ids: updates.enrollment || undefined,
+  };
+
   try {
-    const user = await users.findByIdAndUpdate(id, updates, {
+    const user = await users.findByIdAndUpdate(id, updateCourse, {
       new: true,
       runValidators: true,
-      updated_at: Date.now(),
     });
 
     if (!user) {
